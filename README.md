@@ -10,8 +10,10 @@ Requirements
 
 Role Variables
 --------------
-
-n/a
+php_default_version: The default version of php for the server
+php_memory_limit: The maximum memory limit
+php_max_input_vars: The maximum input vars
+php_versions: A list of versions to install
 
 Dependencies
 ------------

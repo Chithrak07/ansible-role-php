@@ -9,5 +9,6 @@
     update_cache: yes
   
 - name: Include php version specific playbook
-  import_tasks: "php{{ php_version }}.yml"
-  when: php_version is defined
+  include_tasks: "php{{ item }}.yml"
+  with_items: "{{ php_versions }}"
+  when: php_versions is defined
