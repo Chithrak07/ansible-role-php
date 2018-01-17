@@ -1,0 +1,13 @@
+---
+- name: Check if OS is Ubuntu 16.04
+  fail: msg="Server must be Ubuntu 16.04"
+  when: ansible_distribution != 'Ubuntu' or ansible_distribution_version != '16.04'
+
+- name: Add ondrej repo to get PHP packages
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    update_cache: yes
+  
+- name: Include php version specific playbook
+  import_tasks: "php{{ php_version }}.yml"
+  when: php_version is defined
