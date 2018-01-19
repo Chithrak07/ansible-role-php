@@ -1,0 +1,65 @@
+---
+- name: Install PHP 7.0 modules
+  apt:
+    name: "{{ php_module }}"
+    update_cache: yes
+    state: present
+  loop_control:
+    loop_var: php_module
+  with_items:
+    - php7.0-bcmath
+    - php7.0-curl
+    - php7.0-fpm
+    - php7.0-gd
+    - php-igbinary
+    - php7.0-mbstring
+    - php7.0-mcrypt
+    - php7.0-mysql
+    - php7.0-opcache
+    - php-redis
+    - php7.0-soap
+    - php7.0-xml
+    - php7.0-xmlrpc
+    - php7.0-zip
+
+- name: ensure php7.0-fpm cgi.fix_pathinfo=0
+  lineinfile:
+    dest: /etc/php/7.0/fpm/php.ini
+    regexp: '^(.*)cgi.fix_pathinfo='
+    line: cgi.fix_pathinfo=0
+  notify:
+    - restart php7.0-fpm
+
+- name: increase php7.0-fpm memory_limit
+  lineinfile:
+    dest: /etc/php/7.0/fpm/php.ini
+    regexp: '^(.*)memory_limit(.*)=(.*)'
+    line: 'memory_limit = {{ php_memory_limit }}'
+  notify:
+    - restart php7.0-fpm
+
+- name: increase php7.0-fpm max_input_vars
+  lineinfile:
+    dest: /etc/php/7.0/fpm/php.ini
+    regexp: '^(.*)max_input_vars(.*)=(.*)'
+    line: 'max_input_vars = {{ php_max_input_vars }}'
+  notify:
+    - restart php7.0-fpm
+    
+- name: enable mcrypt module
+  shell: phpenmod mcrypt
+  args:
+    creates: /etc/php/7.0/cli/conf.d/20-mcrypt.ini
+
+- name: Ensure php7.0-fpm is started.
+  service: name=php7.0-fpm state=started
+
+- name: Get default PHP version
+  shell: /usr/bin/php -v | grep 'PHP '
+  register: php_installed_default_version
+  failed_when: false
+  changed_when: false
+
+- name: Set default PHP version to 7.0 (PHP CLI)
+  shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  when: php_default_version == 7.0 and (not php_installed_default_version.stdout | search("PHP 7.0"))

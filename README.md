@@ -1,12 +1,12 @@
 php
 ======
 
-For setting up PHP on an Ubuntu 16.04 server.
+For setting up PHP on an Ubuntu 14.04 or 16.04 server.
 
 
 Requirements
 ------------
-* Ubuntu 16.04
+* Ubuntu 14.04 or 16.04
 
 Role Variables
 --------------
