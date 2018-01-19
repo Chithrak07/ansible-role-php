@@ -45,9 +45,16 @@
 
 - name: Ensure php7.1-fpm is started.
   service: name=php7.1-fpm state=started
+  
+- name: Get default PHP version
+  shell: /usr/bin/php -v | grep 'PHP '
+  register: php_installed_default_version
+  failed_when: false
+  changed_when: false
 
 - name: Set default PHP version to {{ php_default_version }} (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  when: not php_installed_default_version.stdout | search("PHP 7.1") 
   
 - name: Check for existence of /etc/acro/add-website.conf
   stat: path=/etc/acro/add-website.conf.php{{ php_default_version }}
