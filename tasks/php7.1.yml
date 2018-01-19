@@ -1,9 +1,11 @@
 ---
 - name: Install PHP 7.1 modules
   apt:
-    name: "{{ item }}"
+    name: "{{ php_module }}"
     update_cache: yes
     state: present
+  loop_control:
+    loop_var: php_module
   with_items:
     - php7.1-common
     - php7.1-bcmath
