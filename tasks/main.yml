@@ -1,24 +1,27 @@
 ---
-- name: Check if OS is Ubuntu 14.04 or 16.04
-  fail: msg="Server must be Ubuntu 14.04 or 16.04"
-  when: ansible_distribution != 'Ubuntu' or (ansible_distribution_version != '14.04' and ansible_distribution_version != '16.04')
+- name: Check if OS is Ubuntu LTS
+  fail: msg="Server must be Ubuntu LTS"
+  when: ansible_distribution != 'Ubuntu'
+    or (ansible_distribution_version != '14.04'
+      and ansible_distribution_version != '16.04'
+      and ansible_distribution_version != '18.04')
 
-- name: Add ondrej repo to get PHP packages
+- name: Add ondrej repo to allow multiple PHP versions
   apt_repository:
     repo: "ppa:ondrej/php"
     update_cache: yes
-  
+
 - name: Include php version specific playbook
   include_tasks: "php{{ item }}.yml"
   with_items: "{{ php_versions }}"
   when: php_versions is defined
-  
+
 - name: Check for existence of /etc/acro/add-website.conf
   stat: path=/etc/acro/add-website.conf.php{{ php_default_version }}
   register: add_website_conf
   tags:
     - acroutils
-  
+
 - name: Set default PHP version to {{ php_default_version }} (acro-add-website.sh)
   file:
     state: link
