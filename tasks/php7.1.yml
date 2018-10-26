@@ -1,12 +1,7 @@
 ---
 - name: Install PHP 7.1 modules
   apt:
-    name: "{{ php_module }}"
-    update_cache: yes
-    state: present
-  loop_control:
-    loop_var: php_module
-  with_items:
+    name:
     - php7.1-common
     - php7.1-bcmath
     - php7.1-curl
@@ -20,6 +15,8 @@
     - php7.1-xml
     - php7.1-xmlrpc
     - php7.1-zip
+    update_cache: yes
+    state: present
 
 - name: ensure php7.1-fpm cgi.fix_pathinfo=0
   lineinfile:
@@ -44,7 +41,7 @@
     line: 'max_input_vars = {{ php_max_input_vars }}'
   notify:
     - restart php7.1-fpm
-    
+
 - name: enable mcrypt module
   shell: phpenmod mcrypt
   args:

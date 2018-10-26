@@ -1,12 +1,7 @@
 ---
 - name: Install PHP 7.2 modules
   apt:
-    name: "{{ php_module }}"
-    update_cache: yes
-    state: present
-  loop_control:
-    loop_var: php_module
-  with_items:
+    name:
     - php7.2-common
     - php7.2-bcmath
     - php7.2-curl
@@ -19,6 +14,8 @@
     - php7.2-xml
     - php7.2-xmlrpc
     - php7.2-zip
+    update_cache: yes
+    state: present
 
 - name: ensure php7.2-fpm cgi.fix_pathinfo=0
   lineinfile:

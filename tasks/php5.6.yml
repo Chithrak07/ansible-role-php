@@ -1,12 +1,7 @@
 ---
 - name: Install PHP 5.6 modules
   apt:
-    name: "{{ php_module }}"
-    update_cache: yes
-    state: present
-  loop_control:
-    loop_var: php_module
-  with_items:
+    name:
     - php5.6-bcmath
     - php5.6-curl
     - php5.6-fpm
@@ -21,6 +16,9 @@
     - php5.6-xml
     - php5.6-xmlrpc
     - php5.6-zip
+    update_cache: yes
+    state: present
+
 
 - name: ensure php5.6-fpm cgi.fix_pathinfo=0
   lineinfile:
@@ -45,7 +43,7 @@
     line: 'max_input_vars = {{ php_max_input_vars }}'
   notify:
     - restart php5.6-fpm
-    
+
 - name: enable mcrypt module
   shell: phpenmod mcrypt
   args:
