@@ -27,6 +27,8 @@
     state: link
     src: /etc/acro/add-website.conf.php{{ php_default_version }}
     dest: /etc/acro/add-website.conf
-  when: add_website_conf.stat.exists == true
+  when: add_website_conf is defined
+    and add_website_conf.stat is defined
+    and add_website_conf.stat.exists == true
   tags:
     - acroutils
