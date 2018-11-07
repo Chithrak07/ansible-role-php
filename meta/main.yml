@@ -1,9 +1,9 @@
 ---
 galaxy_info:
   author: Matt Breden
-  description: Installs PHP on Ubuntu 14.04 or 16.04
+  description: Install PHP FPM on Ubuntu LTS (14.04 or newer)
   company: Acro Media Inc.
-  license: MIT
+  license: GPLv3
 
   min_ansible_version: 2.0
   platforms:
@@ -11,5 +11,6 @@ galaxy_info:
     versions:
     - trusty
     - xenial
+    - bionic
   galaxy_tags: []
 dependencies: []
