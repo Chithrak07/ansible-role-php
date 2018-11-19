@@ -1,7 +1,9 @@
 ---
 - name: Install PHP 5.6 modules
+# Note: Some of the package names fail check mode if the Ondrej repo hasn't yet been installed.
   apt:
     name:
+    - php5.6-common
     - php5.6-bcmath
     - php5.6-curl
     - php5.6-fpm
@@ -10,6 +12,7 @@
     - php5.6-mbstring
     - php5.6-mcrypt
     - php5.6-mysql
+#   - php5.6-pgsql
     - php5.6-opcache
     - php5.6-redis
     - php5.6-soap

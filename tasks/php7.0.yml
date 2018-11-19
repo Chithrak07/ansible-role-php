@@ -1,5 +1,6 @@
 ---
 - name: Install PHP 7.0 modules
+# Note: Some of the package names fail check mode if the Ondrej repo hasn't yet been installed.
   apt:
     name:
     - php7.0-common
@@ -11,9 +12,9 @@
     - php7.0-mbstring
     - php7.0-mcrypt
     - php7.0-mysql
-    - php7.0-pgsql
+#   - php7.0-pgsql
     - php7.0-opcache
-    - php-redis
+    - php7.0-redis
     - php7.0-soap
     - php7.0-xml
     - php7.0-xmlrpc
