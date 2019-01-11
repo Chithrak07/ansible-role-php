@@ -53,16 +53,3 @@
 
 - name: Ensure php7.0-fpm is started.
   service: name=php7.0-fpm state=started
-
-- name: Get default PHP version
-  shell: /usr/bin/php -v | grep 'PHP '
-  register: php_installed_default_version
-  failed_when: false
-  changed_when: false
-
-- name: Set default PHP version to 7.0 (PHP CLI)
-  shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
-  when: php_default_version == 7.0
-    and php_installed_default_version is defined
-    and php_installed_default_version.stdout is defined
-    and (not php_installed_default_version.stdout | search("PHP 7.0"))
