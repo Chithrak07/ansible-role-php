@@ -1,0 +1,50 @@
+---
+- name: Install PHP 7.3 modules
+# Note: Some of the package names fail check mode if the Ondrej repo hasn't yet been installed.
+  apt:
+    name:
+    - php7.3-common
+    - php7.3-bcmath
+    - php7.3-curl
+    - php7.3-fpm
+    - php7.3-gd
+    - php7.3-igbinary
+    - php7.3-mbstring
+    # Mcrypt is deprecated as of php 7.2
+    - php7.3-mysql
+   #- php7.3-pgsql
+    - php7.3-opcache
+    - php7.3-redis
+    - php7.3-soap
+    - php7.3-xml
+    - php7.3-xmlrpc
+    - php7.3-zip
+    update_cache: yes
+    state: present
+
+- name: ensure php7.3-fpm cgi.fix_pathinfo=0
+  lineinfile:
+    dest: /etc/php/7.3/fpm/php.ini
+    regexp: '^(.*)cgi.fix_pathinfo='
+    line: cgi.fix_pathinfo=0
+  notify:
+    - restart php7.3-fpm
+
+- name: increase php7.3-fpm memory_limit
+  lineinfile:
+    dest: /etc/php/7.3/fpm/php.ini
+    regexp: '^(.*)memory_limit(.*)=(.*)'
+    line: 'memory_limit = {{ php_memory_limit }}'
+  notify:
+    - restart php7.3-fpm
+
+- name: increase php7.3-fpm max_input_vars
+  lineinfile:
+    dest: /etc/php/7.3/fpm/php.ini
+    regexp: '^(.*)max_input_vars(.*)=(.*)'
+    line: 'max_input_vars = {{ php_max_input_vars }}'
+  notify:
+    - restart php7.3-fpm
+
+- name: Ensure php7.3-fpm is started.
+  service: name=php7.3-fpm state=started

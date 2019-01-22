@@ -66,3 +66,11 @@
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | search("PHP 7.2"))
+
+- name: Set default PHP version to 7.3 (PHP CLI)
+  shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  when: php_default_version == 7.3
+    and php_installed_default_version is defined
+    and php_installed_default_version.stdout is defined
+    and (not php_installed_default_version.stdout | search("PHP 7.3"))
+
