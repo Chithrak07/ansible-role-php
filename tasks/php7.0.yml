@@ -13,6 +13,7 @@
     - php7.0-mcrypt
     - php7.0-mysql
 #   - php7.0-pgsql
+    - php7.0-oauth
     - php7.0-opcache
     - php7.0-redis
     - php7.0-soap
