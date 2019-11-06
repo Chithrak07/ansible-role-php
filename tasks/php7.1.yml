@@ -12,7 +12,7 @@
     - php7.1-mbstring
     - php7.1-mcrypt
     - php7.1-mysql
-#   - php7.1-pgsql
+    - php7.1-pgsql
     - php7.1-oauth
     - php7.1-opcache
     - php7.1-redis

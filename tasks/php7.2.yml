@@ -12,7 +12,7 @@
     - php7.2-mbstring
     # Mcrypt is deprecated as of php 7.2
     - php7.2-mysql
-#   - php7.2-pgsql
+    - php7.2-pgsql
     - php7.2-oauth
     - php7.2-opcache
     - php7.2-redis
