@@ -29,12 +29,14 @@
     dest: /etc/acro/add-website.conf
   when: add_website_conf is defined
     and add_website_conf.stat is defined
-    and add_website_conf.stat.exists == true
+    and add_website_conf.stat.exists
   tags:
     - acroutils
 
 - name: Get default PHP version
-  shell: /usr/bin/php -v | grep 'PHP '
+  shell: >
+    set -o pipefail && \
+    /usr/bin/php -v | grep 'PHP '
   register: php_installed_default_version
   failed_when: false
   changed_when: false
