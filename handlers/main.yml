@@ -1,15 +1,20 @@
 ---
 - name: restart php5.6-fpm
   service: name=php5.6-fpm state=restarted
+  changed_when: False
 
 - name: restart php7.0-fpm
   service: name=php7.0-fpm state=restarted
+  changed_when: False
 
 - name: restart php7.1-fpm
   service: name=php7.1-fpm state=restarted
+  changed_when: False
 
 - name: restart php7.2-fpm
   service: name=php7.2-fpm state=restarted
+  changed_when: False
 
 - name: restart php7.3-fpm
   service: name=php7.3-fpm state=restarted
+  changed_when: False
