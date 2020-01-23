@@ -43,35 +43,48 @@
 
 - name: Set default PHP version to 5.6 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  register: command_result
   when: php_default_version == 5.6
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 5\.6"))
+  changed_when: command_result.stdout == "to provide"
 
 - name: Set default PHP version to 7.0 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  register: command_result
   when: php_default_version == 7.0
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 7\.0"))
+  changed_when: command_result.stdout == "to provide"
 
 - name: Set default PHP version to 7.1 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  register: command_result
   when: php_default_version == 7.1
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 7\.1"))
+  changed_when: command_result.stdout == "to provide"
 
 - name: Set default PHP version to 7.2 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  register: command_result
   when: php_default_version == 7.2
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 7\.2"))
+  changed_when: command_result.stdout == "to provide"
 
+# find out what update alternatives spits out and parse some of that through the registered variable: did this task change or not.
 - name: Set default PHP version to 7.3 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
+  register: command_result
   when: php_default_version == 7.3
     and php_installed_default_version is defined
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 7\.3"))
+  changed_when: command_result.stdout == "to provide"
+
+- debug: var=command_output

@@ -17,15 +17,20 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip3 install 'molecule[docker]'
 $ pip3 install -r requirements.txt
-$ MOLECULE_DISTRO=ubuntu1604 molecule test
+$ MOLECULE_DISTRO=ubuntu1804-php71 molecule test
 ```
 
 - note that you can substitute MOLECULE_DISTRO=version for the following:
 
 __MOLECULE_DISTRO List__
     
-    ubuntu1604
-    ubuntu1804
+    ubuntu1804-php72
+    ubuntu1804-php71
+    ubuntu1804-php70
+    
+    ubuntu1604-php72
+    ubuntu1604-php71
+    ubuntu1604-php70
 
 - look here for more images: https://hub.docker.com/r/geerlingguy/
     
@@ -40,7 +45,7 @@ $ molecule init scenario -r ansible-role-php
     
 ```bash
     /molecule/molecule.yml
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1604}-ansible:latest"
+    image: "superelectron/docker-ubuntu-ansible-php:${MOLECULE_DISTRO:-ubuntu1804-php72}"
 ```
 
 - run this command so that the container is not dead
