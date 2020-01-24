@@ -59,12 +59,13 @@
     state: link
     src: /etc/acro/add-website.conf.php{{ php_default_version }}
     dest: /etc/acro/add-website.conf
-  when: (add_website_conf is defined or copy_website_conf is defined)
-    and (add_website_conf.stat is defined or copy_website_conf.stat is defined)
-    and (add_website_conf.stat.exists or copy_website_conf.exists)
+  when: (add_website_conf is defined or copy_website_conf)
+    and (add_website_conf.stat is defined or copy_website_conf)
+    and (add_website_conf.stat.exists or copy_website_conf)
   tags:
     - acroutils
 
+# @todo: the 'php_installed_default_version' variable never gets set
 - name: Get default PHP version
   shell: >
     set -o pipefail && /usr/bin/php -v | grep 'PHP '

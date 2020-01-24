@@ -17,20 +17,20 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip3 install 'molecule[docker]'
 $ pip3 install -r requirements.txt
-$ MOLECULE_DISTRO=ubuntu1804-php71 molecule test
+$ MY_PHP=7.2 MOLECULE_DISTRO=ubuntu1804-php72 PHP_VERSIONS=7.2 molecule test --destroy=never
 ```
 
-- note that you can substitute MOLECULE_DISTRO=version for the following:
+- note that you can substitute MOLECULE_DISTRO=version PHP_VERSIONS=versions for the following:
 
 __MOLECULE_DISTRO List__
     
-    ubuntu1804-php72
-    ubuntu1804-php71
-    ubuntu1804-php70
+    ubuntu1804-php72 PHP_VERSIONS=7.2
+    ubuntu1804-php71 PHP_VERSIONS=7.1
+    ubuntu1804-php70 PHP_VERSIONS=7.0
     
-    ubuntu1604-php72
-    ubuntu1604-php71
-    ubuntu1604-php70
+    ubuntu1604-php72 PHP_VERSIONS=7.2
+    ubuntu1604-php71 PHP_VERSIONS=7.1
+    ubuntu1604-php70 PHP_VERSIONS=7.0
 
 - look here for more images: https://hub.docker.com/r/geerlingguy/
     
