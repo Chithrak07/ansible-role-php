@@ -1,3 +1,4 @@
+# molecule/default/molecule.yml
 ---
 dependency:
   name: galaxy
@@ -10,8 +11,7 @@ lint:
       ignore: venv
 platforms:
   - name: instance
-#    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest"
-    image: "superelectron/docker-ubuntu-ansible-php:${MOLECULE_DISTRO:-ubuntu1804-php71}"
+    image: "superelectron/docker-ubuntu-ansible-php:${MOLECULE_DISTRO:-ubuntu1804-php70}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

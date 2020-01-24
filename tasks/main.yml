@@ -6,6 +6,19 @@
       and ansible_distribution_version != '16.04'
       and ansible_distribution_version != '18.04')
 
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 4
+
+# Example that prints two lines of messages, but only if there is an environment value set
+- debug:
+    msg:
+    - "Provisioning based on MY_PHP:  {{ lookup('env', 'MY_PHP') }}"
+    - "php_default_version:           {{ php_default_version }}"
+    - "MOLECULE_DISTRO:               {{ lookup('env', 'MOLECULE_DISTRO') }}"
+    - "php_versions:                  {{ lookup('env', 'PHP_VERSIONS') }}"
+
 - name: Add ondrej repo to allow multiple PHP versions
   apt_repository:
     repo: "ppa:ondrej/php"
@@ -16,30 +29,53 @@
   with_items: "{{ php_versions }}"
   when: php_versions is defined
 
-- name: Check for existence of /etc/acro/add-website.conf
-  stat: path=/etc/acro/add-website.conf.php{{ php_default_version }}
+- name: Create /etc/acro folder if it doesn't exist
+  file:
+    path: /etc/acro
+    state: directory
+    mode: '0755'
+  register: etc_directory_exists
+
+- name: Check for existence of /etc/acro/add-website.conf.php{{ php_default_version }}
+  stat:
+    path: /etc/acro/add-website.conf.php{{ php_default_version }}
   register: add_website_conf
   tags:
     - acroutils
+
+- name: Create /etc/acro/add-website.conf.php{{ php_default_version }}
+  template:
+    src: "{{ role_path }}/templates/etc/acro/add-website.conf.php{{ php_default_version }}.j2"
+    dest: /etc/acro/add-website.conf.php{{ php_default_version }}
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  when: not add_website_conf.stat.exists
+  register: copy_website_conf
 
 - name: Set default PHP version to {{ php_default_version }} (acro-add-website.sh)
   file:
     state: link
     src: /etc/acro/add-website.conf.php{{ php_default_version }}
     dest: /etc/acro/add-website.conf
-  when: add_website_conf is defined
-    and add_website_conf.stat is defined
-    and add_website_conf.stat.exists
+  when: (add_website_conf is defined or copy_website_conf is defined)
+    and (add_website_conf.stat is defined or copy_website_conf.stat is defined)
+    and (add_website_conf.stat.exists or copy_website_conf.exists)
   tags:
     - acroutils
 
 - name: Get default PHP version
   shell: >
-    set -o pipefail && \
-    /usr/bin/php -v | grep 'PHP '
+    set -o pipefail && /usr/bin/php -v | grep 'PHP '
   register: php_installed_default_version
   failed_when: false
   changed_when: false
+
+- debug:
+    msg:
+    - "php_installed_default_version:  {{ lookup('env', 'php_installed_default_version.stdout') }}"
+    - "add_website_conf:  {{ lookup('env', 'add_website_conf') }}"
 
 - name: Set default PHP version to 5.6 (PHP CLI)
   shell: update-alternatives --set php /usr/bin/php{{ php_default_version }}
@@ -86,5 +122,3 @@
     and php_installed_default_version.stdout is defined
     and (not php_installed_default_version.stdout | regex_search("PHP 7\.3"))
   changed_when: command_result.stdout == "to provide"
-
-- debug: var=command_output

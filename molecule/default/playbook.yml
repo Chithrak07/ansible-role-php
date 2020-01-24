@@ -1,5 +1,11 @@
+# molecule/default/playbook.yml
 ---
 - name: Converge
   hosts: all
   roles:
     - role: ansible-role-php
+  vars:
+    phpOverride: "{{ lookup('env', 'MY_PHP') }}"
+    php_default_version: "{{ (phpOverride | length > 0) | ternary(phpOverride, '7.0') }}"
+    phpVersionOverride: "{{ lookup('env', 'PHP_VERSIONS') }}"
+    php_versions: "{{ (phpVersionOverride | length > 0) | ternary(phpVersionOverride, '7.0') }}"
