@@ -2,24 +2,7 @@
 - name: Install PHP 7.3 modules
 # Note: Some of the package names fail check mode if the Ondrej repo hasn't yet been installed.
   apt:
-    name:
-    - php7.3-common
-    - php7.3-bcmath
-    - php7.3-curl
-    - php7.3-fpm
-    - php7.3-gd
-    - php7.3-igbinary
-    - php7.3-mbstring
-    # Mcrypt is deprecated as of php 7.2
-    - php7.3-mysql
-    - php7.3-pgsql
-    - php7.3-oauth
-    - php7.3-opcache
-    - php7.3-redis
-    - php7.3-soap
-    - php7.3-xml
-    - php7.3-xmlrpc
-    - php7.3-zip
+    name: "{{ php73_modules }}"
     update_cache: yes
     state: present
 

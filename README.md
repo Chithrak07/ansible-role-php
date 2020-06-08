@@ -12,6 +12,7 @@ Install and configure PHP for use with Drupal sites in Acro hosting environments
 * php_memory_limit: The maximum memory limit
 * php_max_input_vars: The maximum input vars
 * php_versions: A list of versions to install
+* phpXX_add_modules: A list of extra apt packages not already included in the [default list](./defaults/main.yml), where XX corresponds to the PHP version(s) you're installing.
 
 ## Dependencies
 
@@ -28,6 +29,8 @@ None
         - 7.0
         - 7.1
         - 7.2
+      php71_add_modules:
+        - php7.1-extra-thingy
       tags:
         - php
 

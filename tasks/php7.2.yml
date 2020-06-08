@@ -2,24 +2,7 @@
 - name: Install PHP 7.2 modules
 # Note: Some of the package names fail check mode if the Ondrej repo hasn't yet been installed.
   apt:
-    name:
-    - php7.2-common
-    - php7.2-bcmath
-    - php7.2-curl
-    - php7.2-fpm
-    - php7.2-gd
-    - php7.2-igbinary
-    - php7.2-mbstring
-    # Mcrypt is deprecated as of php 7.2
-    - php7.2-mysql
-    - php7.2-pgsql
-    - php7.2-oauth
-    - php7.2-opcache
-    - php7.2-redis
-    - php7.2-soap
-    - php7.2-xml
-    - php7.2-xmlrpc
-    - php7.2-zip
+    name: "{{ php72_modules }}"
     update_cache: yes
     state: present
 
