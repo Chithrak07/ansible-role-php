@@ -1,0 +1,27 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_default_version: '5.6'
+    php_memory_limit: "192M"
+
+  pre_tasks:
+
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      changed_when: false
+
+    - name: Ensure dirmngr is installed (gnupg dependency).
+      apt:
+        name: dirmngr
+        state: present
+
+    - name: Add repository for PHP
+      apt_repository: repo='ppa:ondrej/php'
+
+    - meta: flush_handlers
+
+  roles:
+    - role: ansible-role-php
