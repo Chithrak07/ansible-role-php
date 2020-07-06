@@ -17,26 +17,10 @@
     - name: Add repository for PHP
       apt_repository: repo='ppa:ondrej/php'
 
-    # For ansible-role-devops-utils
-  #  - name: rsync | install rsync
-  #    become: true
-  #    apt:
-  #      pkg: rsync
-  #      state: present
-
-  # - name: make | install make
-  #    become: true
-  #    apt:
-  #      pkg: make
-  #      state: present
-
   roles:
-  #- role: ansible-role-devops-utils
     - role: ansible-role-php
+
   vars:
-    php_default_version: 7.1
-    php_memory_limit: 256M
-    php_max_input_vars: 3001
+    php_default_version: 7.3
     php_versions:
-      - 7.1
-      - 7.2
+      - 7.3

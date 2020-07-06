@@ -5,9 +5,5 @@
 
   tasks:
     - name: Confirm PHP configuration is correct.
-      shell: php -v | grep '7.1'
-      changed_when: false
-
-    - name: Confirm PHP configuration is correct.
-      shell: php -i | grep 'memory_limit.*256'
+      shell: php -v | grep '7.3'
       changed_when: false
