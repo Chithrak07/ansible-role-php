@@ -1,9 +1,13 @@
 ---
-- name: Check that nginx file has been created
+- name: Check php is configured
   hosts: all
   become: yes
 
   tasks:
     - name: Confirm PHP configuration is correct.
-      shell: php -i | grep 'memory_limit.*192'
+      shell: php -v | grep '7.1'
+      changed_when: false
+
+    - name: Confirm PHP configuration is correct.
+      shell: php -i | grep 'memory_limit.*256'
       changed_when: false
