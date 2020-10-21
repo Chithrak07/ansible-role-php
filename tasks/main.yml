@@ -4,7 +4,8 @@
   when: ansible_distribution != 'Ubuntu'
     or (ansible_distribution_version != '14.04'
       and ansible_distribution_version != '16.04'
-      and ansible_distribution_version != '18.04')
+      and ansible_distribution_version != '18.04'
+      and and ansible_distribution_version != '20.04')
 
 - name: Add ondrej repo to allow multiple PHP versions
   apt_repository:
