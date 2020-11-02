@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_default_version: 7.2
+    php_memory_limit: 192M
+    php_max_input_vars: 100
+    php_versions:
+      - 7.2
+
+  roles:
+    - role: ansible-role-php
+
+  tasks:
+
+  post_tasks:
+    - name: Confirm PHP version is correct.
+      shell: php -v | grep -F '{{ php_default_version }}'
+      changed_when: false
+
