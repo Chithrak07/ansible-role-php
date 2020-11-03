@@ -11,4 +11,4 @@ jobs:
         with:
           path: "${{ github.repository }}"
       - name: molecule
-        uses: Chithrak07/molecule-action@2.6.3
+        uses: Chithrak07/ansible-role-php@2.6.3
