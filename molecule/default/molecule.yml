@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: instance1-$TOX_ENVNAME
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
